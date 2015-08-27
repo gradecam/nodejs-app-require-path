@@ -3,7 +3,6 @@
 module.exports = appRequirePath;
 
 var fs = require('fs'),
-    globalPaths = require('module').globalPaths,
     path = require('path');
 
 function appRequirePath(dirname) {
@@ -61,37 +60,30 @@ function detectRoot(dirname) {
     if (process.env.NODE_PATH || process.env.APP_ROOT_PATH) {
         return path.resolve(process.env.NODE_PATH || process.env.APP_ROOT_PATH);
     }
-    var alternateMethod = false,
-        resolved = path.resolve(dirname),
+    var resolved = path.resolve(dirname),
         rootPath = null,
         parts = resolved.split(path.sep),
+        i = parts.length,
         filename;
-    // Check to see if module was loaded from a global include path
-    globalPaths.forEach(function(globalPath) {
-        if (!alternateMethod && 0 === resolved.indexOf(globalPath)) {
-            alternateMethod = true;
-        }
-    });
 
     // Attempt to locate root path based on the existence of `package.json`
-    if (!alternateMethod) {
-        for (var i=parts.length; i > 0; i--) {
-            try {
-                filename = path.join(parts.slice(0, i).join(path.sep), 'package.json');
-                if (fs.statSync(filename).isFile()) {
-                    rootPath = path.dirname(filename);
-                    break;
-                }
-            } catch(err) {
-                // the ENOENT error just indicates we need to look up the path
-                continue;
+    while (rootPath === null && i > 0) {
+        try {
+            filename = path.join(parts.slice(0, i).join(path.sep), 'package.json');
+            i--;
+            if (fs.statSync(filename).isFile()) {
+                rootPath = path.dirname(filename);
             }
+        } catch(err) {
+            // the ENOENT error just indicates we need to look up the path
+            continue;
         }
     }
 
     // If the above didn't work, or this module is loaded globally, then
     // resort to require.main.filename (See http://nodejs.org/api/modules.html)
-    if (alternateMethod || null === rootPath) {
+    if (null === rootPath) {
+        console.log('using alternate method');
         rootPath = path.dirname(require.main.filename);
     }
 
