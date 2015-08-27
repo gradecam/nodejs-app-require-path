@@ -11,7 +11,7 @@ other projects.
 var require = require(‘app-require-path’)().require;
 
 // Require `lib/errors` from the base of your project
-var errors = require(‘~/lib/errors);
+var errors = require(‘~/lib/errors’);
 
 // require a project module using the value of an environment variable as
 // part of the filename. If the environment variable isn’t set use ‘default’.
@@ -24,7 +24,7 @@ var other = require(‘other’);
 ## Methodology
 
 Much of the code is identical to that of [app-root-path](https://github.com/inxilpro/node-app-root-path)
-though this module does not base the project root detection on the presence of `node_modules` folder.
+though this module does not base the project root detection on the presence of a `node_modules` folder.
 Instead attempts to locate a `package.json` file are used as all node modules/projects should have such
 a file even if they have no external dependencies.
 
@@ -34,7 +34,7 @@ include within their projects. To ensure safe usage within such a module you sho
 
 
 ```javascript
-var require = require(‘app-require-path)(__dirname).require;
+var require = require(‘app-require-path’)(__dirname).require;
 ```
 
 ### Inspired by:
