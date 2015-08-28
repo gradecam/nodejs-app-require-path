@@ -27,12 +27,15 @@ function appRequirePath(dirname) {
          *
          * @param modulePath String path to the module
          **/
-        require: function arpRequire(modulePath) {
+        require: function requireModule(modulePath) {
             return require(iface.resolve(modulePath));
         },
 
+        // TODO: add the good parts from [requireFrom](https://github.com/dskrepps/requireFrom)
+        // add in createLinks method to add symlinks to node_modules for defined paths
+
         /**
-         * returns the rootPath of the application
+         * returns the rootPath of the application/module
          **/
         toString: function toString() {
             return rootPath;
