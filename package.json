@@ -1,7 +1,7 @@
 {
   "name": "app-require-path",
   "description": "Simplifies requiring of application modules.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "repository": "gradecam/nodejs-app-require-path",
   "license": "MIT",
   "main": "app-require-path.js",
