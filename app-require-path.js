@@ -18,7 +18,7 @@ function appRequirePath(dirname) {
             if (modulePath[0] === '~') {
                 modulePath = path.join(rootPath, modulePath.substr(1));
             } else if (modulePath[0] === '.') {
-                modulePath = path.join((dirname || rootPath), modulePath);
+                modulePath = path.join((dirname || process.cwd()), modulePath);
             }
             modulePath = resolveEnvVars(modulePath);
             return modulePath;
