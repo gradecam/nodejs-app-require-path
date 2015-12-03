@@ -61,10 +61,6 @@ function appRequirePath(dirname) {
  * @param dirname String a directory within the application
  **/
 function detectRoot(dirname) {
-    // check for environment variables
-    if (process.env.NODE_PATH || process.env.APP_ROOT_PATH) {
-        return path.resolve(process.env.NODE_PATH || process.env.APP_ROOT_PATH);
-    }
     var resolved = path.resolve(dirname),
         rootPath = null,
         parts = resolved.split(path.sep),
